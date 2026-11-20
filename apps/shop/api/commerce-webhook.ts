@@ -108,15 +108,19 @@ export default async function handler(req: any, res: any) {
         .from("commerce_payments").select("id,order_id").eq("provider_payment_intent_id", object.id).maybeSingle();
       if (isDbError(paymentLookupError)) throw paymentLookupError;
       if (payment) {
-        const { error: paymentUpdateError } = await supabase.from("commerce_payments")
+        const { data: updatedPayment, error: paymentUpdateError } = await supabase.from("commerce_payments")
           .update({ provider_event_id: event.id, provider_event_created_at: occurredAt, verified: true, status: "failed" })
           .eq("id", payment.id).or(`provider_event_created_at.is.null,provider_event_created_at.lte.${occurredAt}`)
-          .in("status", ["pending", "processing"]);
+          .in("status", ["pending", "processing"]).select("id");
         if (isDbError(paymentUpdateError)) throw paymentUpdateError;
-        const { error: orderError } = await supabase.from("commerce_orders")
-          .update({ status: "cancelled", cancelled_at: occurredAt })
-          .eq("id", payment.order_id).eq("status", "pending_payment");
-        if (isDbError(orderError)) throw orderError;
+        // Only cancel the order when this event actually transitioned the payment.
+        // A stale failure event must not cancel an order after a successful payment.
+        if (updatedPayment?.length) {
+          const { error: orderError } = await supabase.from("commerce_orders")
+            .update({ status: "cancelled", cancelled_at: occurredAt })
+            .eq("id", payment.order_id).eq("status", "pending_payment");
+          if (isDbError(orderError)) throw orderError;
+        }
       }
     } else if (event.type === "charge.refunded") {
       const paymentIntent = typeof object.payment_intent === "string" ? object.payment_intent : null;
