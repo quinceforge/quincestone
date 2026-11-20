@@ -21,3 +21,8 @@ comment on table public.commerce_stripe_events is
   'Durable Stripe webhook event ledger. Service-role only; events are recorded after successful reconciliation.';
 comment on column public.commerce_payments.provider_event_created_at is
   'Timestamp of the newest Stripe event applied to this payment; prevents stale events from regressing payment state.';
+
+-- The current fulfillment model is one fulfillment record per order; this
+-- constraint makes concurrent duplicate checkout events safe.
+create unique index if not exists commerce_fulfillments_order_uidx
+  on public.commerce_fulfillments (order_id);
