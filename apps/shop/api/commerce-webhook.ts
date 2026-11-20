@@ -99,7 +99,7 @@ export default async function handler(req: any, res: any) {
         if (isDbError(fulfillmentLookupError)) throw fulfillmentLookupError;
         if (!fulfillment) {
           const { error: fulfillmentInsertError } = await supabase.from("commerce_fulfillments")
-            .insert({ order_id: orderId, source: "supplier", status: "required" });
+            .upsert({ order_id: orderId, source: "supplier", status: "required" }, { onConflict: "order_id", ignoreDuplicates: true });
           if (isDbError(fulfillmentInsertError)) throw fulfillmentInsertError;
         }
       }
