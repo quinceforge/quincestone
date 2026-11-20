@@ -24,7 +24,7 @@ const runtimeGlobals = {
 };
 
 export default [
-  { ignores: ["dist", "coverage"] },
+  { ignores: ["dist", "coverage", "vite.config.ts.timestamp-*"] },
   js.configs.recommended,
   {
     files: ["**/*.{ts,tsx}"],
