@@ -141,7 +141,7 @@ export default async function handler(req: any, res: any) {
                 order_id: payment.order_id, payment_id: payment.id, provider: "stripe",
                 provider_refund_id: event.id, amount, currency: payment.currency, status: "succeeded",
               });
-              if (isDbError(refundInsertError) && refundInsertError.code !== "23505") throw refundInsertError;
+              if (refundInsertError && refundInsertError.code !== "23505") throw refundInsertError;
             }
             if (fullRefund) {
               const { error: orderError } = await supabase.from("commerce_orders").update({ status: "refunded" })
