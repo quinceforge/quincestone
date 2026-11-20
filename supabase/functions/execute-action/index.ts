@@ -39,9 +39,10 @@ async function authorizeExecution(admin: ReturnType<typeof createClient>, token:
   if (!execution) throw new Error("ACTION_NOT_FOUND");
   if (!["authorized", "queued", "retryable"].includes(execution.status)) throw new Error("ACTION_NOT_CLAIMABLE");
 
-  // An action must be executed by the same authenticated administrator who authorized it.
-  // The service-role key is used only after this caller and tenant check has succeeded.
-  if (!execution.authorized_by || execution.authorized_by !== user.id) throw new Error("FORBIDDEN");
+  // Only an explicitly authorized action may run, and the caller must be an
+  // owner/admin of the action's own workspace. The service role is used only
+  // after this caller and tenant check has succeeded.
+  if (!execution.authorized_by) throw new Error("FORBIDDEN");
   const { data: membership, error: membershipError } = await admin.from("workspace_members")
     .select("role").eq("workspace_id", execution.workspace_id).eq("user_id", user.id).maybeSingle();
   if (membershipError) throw new Error("AUTHORIZATION_LOOKUP_FAILED");
