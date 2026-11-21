@@ -75,3 +75,21 @@ The canonical production `commerce_products` table contains 21 records, and none
 | Work | 0 | No collection records observed |
 
 This means catalogue records exist, but none are publicly publishable under the current canonical state gates. Department labels and mappings must be reconciled before publication. In particular, `companion` must be confirmed as the intended Pet department and `home-outdoor` as the intended Home department. Do not promote research records to active or published merely to fill the storefront. Product readiness requires verified supplier, landed cost, media rights, product content, price, inventory and launch approval.
+
+## Updated deployment-provider evidence (2026-11-21)
+
+A direct Vercel project read shows the three customer-facing projects currently have `live: false`. Each has a latest deployment with `readyState: READY`, but `target: null`. Therefore these READY deployments are not evidence of a production-target deployment.
+
+| Project | Framework | Latest deployment target | Project live flag |
+|---|---|---|---|
+| `webquincestone` | Vite | null (not identified as production) | false |
+| `quincestone-shop` | Next.js | null (not identified as production) | false |
+| `quincestone-account` | Next.js | null (not identified as production) | false |
+
+Custom domains are attached to the projects, but attachment alone does not prove the domains serve a current production deployment. Production launch remains unverified.
+
+The Vercel team `quincestone` is on the Hobby plan. Its six Quincestone application projects are connected to GitHub repository `quinceweb/quincestone`, while this active engineering repository is `quinceforge/quincestone`. A separate Vercel team `quincestoneforge` is on Pro but currently has no linked projects. Do not change Git integration, team ownership, domains or project settings without a separate explicit approval and a rollback plan.
+
+## Disposable database environment blocker
+
+The Supabase project currently has no development branch. Branch creation was attempted only after the previously approved $0.01344/hour, 24-hour test window authorization; the provider rejected the operation because database branching requires the Pro plan or above. No branch was created and no cost was incurred. The connected Desktop Commander device was offline at the time of inspection, so local Docker/Supabase CLI validation could not be run. The SQL test script is committed for execution in a disposable database when an eligible environment is available.
