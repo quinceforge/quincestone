@@ -1,5 +1,6 @@
--- Durable Stripe event idempotency and monotonic provider-event ordering.
--- Event rows are inserted only after the webhook's reconciliation writes succeed.
+-- Durable Stripe event idempotency, monotonic payment ordering and refund watermark.
+-- The transactional RPC claims the event before reconciliation; PostgreSQL commits
+-- the claim only when all related commerce writes commit successfully.
 alter table public.commerce_payments
   add column if not exists provider_event_created_at timestamptz;
 
