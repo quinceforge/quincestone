@@ -61,3 +61,17 @@ Domain verification proves domain attachment/verification only. It does not prov
 - No production Supabase writes, migrations, deployments, domain changes, secrets changes or live payment actions were performed.
 - Do not merge this audit branch as a substitute for the required engineering and test gates.
 - All production migrations, production deployments, domain cutovers and cost-incurring infrastructure changes require separate explicit approval.
+
+## Canonical catalogue snapshot (read-only, 2026-11-21)
+
+The canonical production `commerce_products` table contains 21 records, and none currently satisfy the combined public-publishing state (`lifecycle_status = active`, `merchandising_status = published`, `publication_state = published`).
+
+| Collection | Records | Current states |
+|---|---:|---|
+| `drive` | 8 | All research / draft / private |
+| `home-outdoor` | 8 | All research / draft / private |
+| `companion` (Pet naming candidate) | 2 | All research / draft / private |
+| `travel` | 2 | One research / draft / private; one sourcing / draft / private |
+| Work | 0 | No collection records observed |
+
+This means catalogue records exist, but none are publicly publishable under the current canonical state gates. Department labels and mappings must be reconciled before publication. In particular, `companion` must be confirmed as the intended Pet department and `home-outdoor` as the intended Home department. Do not promote research records to active or published merely to fill the storefront. Product readiness requires verified supplier, landed cost, media rights, product content, price, inventory and launch approval.
