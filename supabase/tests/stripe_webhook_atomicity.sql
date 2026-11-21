@@ -12,6 +12,7 @@ declare
   v_result jsonb;
   v_status text;
   v_count integer;
+  v_now bigint := extract(epoch from now())::bigint;
 begin
   insert into public.commerce_orders (
     id, order_number, email, billing_address, shipping_address,
@@ -29,10 +30,27 @@ begin
     5000, 'USD', 'pending', false
   );
 
+  -- A failed card attempt should be recorded but must not cancel an open Checkout Session.
   v_result := public.process_stripe_webhook_event(jsonb_build_object(
-    'id', 'evt_atomicity_test_success',
-    'type', 'checkout.session.completed',
-    'created', extract(epoch from now())::bigint,
+    'id', 'evt_atomicity_test_failure',
+    'type', 'payment_intent.payment_failed',
+    'created', v_now,
+    'data', jsonb_build_object('object', jsonb_build_object(
+      'id', 'pi_atomicity_test_1',
+      'metadata', jsonb_build_object('order_id', v_order_id::text)
+    ))
+  ));
+
+  select status into v_status from public.commerce_payments where id = v_payment_id;
+  if v_status <> 'failed' then raise exception 'Expected failed payment attempt, got %', v_status; end if;
+  select status into v_status from public.commerce_orders where id = v_order_id;
+  if v_status <> 'pending_payment' then raise exception 'Failed payment attempt cancelled retryable order: %', v_status; end if;
+
+  -- An asynchronous Checkout success event must be able to complete that same order.
+  v_result := public.process_stripe_webhook_event(jsonb_build_object(
+    'id', 'evt_atomicity_test_async_success',
+    'type', 'checkout.session.async_payment_succeeded',
+    'created', v_now + 1,
     'data', jsonb_build_object('object', jsonb_build_object(
       'id', 'cs_atomicity_test_1',
       'payment_status', 'paid',
@@ -45,7 +63,7 @@ begin
 
   if coalesce(v_result ->> 'received', 'false') <> 'true'
      or coalesce(v_result ->> 'reconciled', 'false') <> 'true' then
-    raise exception 'Expected successful reconciliation, got %', v_result;
+    raise exception 'Expected successful async reconciliation, got %', v_result;
   end if;
 
   select status into v_status from public.commerce_payments where id = v_payment_id;
@@ -58,14 +76,15 @@ begin
   if v_count <> 1 then raise exception 'Expected exactly one fulfillment, got %', v_count; end if;
 
   v_result := public.process_stripe_webhook_event(jsonb_build_object(
-    'id', 'evt_atomicity_test_success',
-    'type', 'checkout.session.completed',
-    'created', extract(epoch from now())::bigint,
+    'id', 'evt_atomicity_test_async_success',
+    'type', 'checkout.session.async_payment_succeeded',
+    'created', v_now + 1,
     'data', jsonb_build_object('object', jsonb_build_object(
       'id', 'cs_atomicity_test_1',
       'payment_status', 'paid',
       'amount_total', 5000,
       'currency', 'usd',
+      'payment_intent', 'pi_atomicity_test_1',
       'metadata', jsonb_build_object('order_id', v_order_id::text)
     ))
   ));
