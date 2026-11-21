@@ -48,7 +48,8 @@ function isStripeEvent(value: unknown): value is StripeEvent {
     && typeof data === "object"
     && !Array.isArray(data)
     && !!(data as Record<string, unknown>).object
-    && typeof (data as Record<string, unknown>).object === "object";
+    && typeof (data as Record<string, unknown>).object === "object"
+    && !Array.isArray((data as Record<string, unknown>).object);
 }
 
 export default async function handler(req: any, res: any) {
