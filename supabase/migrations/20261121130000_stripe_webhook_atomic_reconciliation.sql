@@ -152,16 +152,16 @@ begin
         end if;
 
         if v_payment.provider_event_created_at is null or v_payment.provider_event_created_at <= v_occurred_at then
-          select coalesce(sum(amount), 0) into v_refund_delta
-          from public.commerce_refunds
-          where payment_id = v_payment.id and status = 'succeeded';
-
-          v_refund_delta := greatest(v_total_refunded - v_refund_delta, 0);
+          -- Stripe sends a cumulative amount_refunded snapshot on charge.refunded.
+          -- Keep a monotonic cumulative watermark; refund rows store only the delta.
+          v_total_refunded := greatest(v_total_refunded, coalesce(v_payment.provider_amount_refunded, 0));
+          v_refund_delta := v_total_refunded - coalesce(v_payment.provider_amount_refunded, 0);
           v_full_refund := v_total_refunded >= v_amount;
 
           update public.commerce_payments
           set provider_event_id = v_event_id,
               provider_event_created_at = v_occurred_at,
+              provider_amount_refunded = v_total_refunded,
               status = case when v_full_refund then 'refunded'
                             when v_total_refunded > 0 then 'partially_refunded'
                             else status end,
