@@ -93,3 +93,17 @@ The Vercel team `quincestone` is on the Hobby plan. Its six Quincestone applicat
 ## Disposable database environment blocker
 
 The Supabase project currently has no development branch. Branch creation was attempted only after the previously approved $0.01344/hour, 24-hour test window authorization; the provider rejected the operation because database branching requires the Pro plan or above. No branch was created and no cost was incurred. The connected Desktop Commander device was offline at the time of inspection, so local Docker/Supabase CLI validation could not be run. The SQL test script is committed for execution in a disposable database when an eligible environment is available.
+
+### Existing DRIVE pricing cross-check
+
+The five approved DRIVE selling prices are already represented as draft variant price amounts in the canonical production catalogue:
+
+| Product | Stored price | Publication state |
+|---|---:|---|
+| 4K Dual Dash Camera | ₦179,900 | Research / draft / private |
+| Multi-function Car Jump Starter | ₦119,900 | Research / draft / private |
+| Digital Tyre Inflator | ₦69,900 | Research / draft / private |
+| Wireless Tyre Pressure Monitor | ₦79,900 | Research / draft / private |
+| Professional OBD2 Diagnostic Scanner | ₦199,900 | Research / draft / private |
+
+These stored values match the approved selling prices, but they do not establish supplier costs, landed costs, inventory, margin or publication authorization. Three other DRIVE research records have no variant rows yet. The current HOME records include five draft variant rows; PET and TRAVEL records have no variant rows; WORK has no product records.
