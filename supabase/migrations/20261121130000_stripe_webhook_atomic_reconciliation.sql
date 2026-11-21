@@ -6,7 +6,7 @@ create or replace function public.process_stripe_webhook_event(p_event jsonb)
 returns jsonb
 language plpgsql
 security definer
-set search_path = public, pg_temp
+set search_path = pg_catalog, public, pg_temp
 as $$
 declare
   v_event_id text := p_event ->> 'id';
@@ -16,7 +16,6 @@ declare
   v_object jsonb := p_event #> '{data,object}';
   v_order_id uuid;
   v_payment public.commerce_payments%rowtype;
-  v_updated_payment_id uuid;
   v_order_status text;
   v_amount bigint;
   v_total_refunded bigint;
@@ -41,7 +40,7 @@ begin
     return jsonb_build_object('received', true, 'duplicate', true);
   end if;
 
-  if v_event_type = 'checkout.session.completed' then
+  if v_event_type in ('checkout.session.completed', 'checkout.session.async_payment_succeeded') then
     if coalesce(v_object ->> 'payment_status', '') <> 'paid' then
       return jsonb_build_object('received', true, 'reconciled', false);
     end if;
@@ -107,31 +106,35 @@ begin
     end if;
 
   elsif v_event_type = 'payment_intent.payment_failed' then
+    v_order_id := null;
+    begin
+      v_order_id := nullif(v_object #>> '{metadata,order_id}', '')::uuid;
+    exception when invalid_text_representation then
+      raise exception using errcode = '22023', message = 'Payment failure event has an invalid order reference';
+    end;
+
     select * into v_payment
     from public.commerce_payments
-    where provider = 'stripe' and provider_payment_intent_id = v_object ->> 'id'
+    where provider = 'stripe'
+      and (
+        provider_payment_intent_id = v_object ->> 'id'
+        or (v_order_id is not null and order_id = v_order_id and provider_payment_intent_id is null)
+      )
     for update;
 
-    if found then
-      select status into v_order_status
-      from public.commerce_orders where id = v_payment.order_id for update;
-
-      if (v_payment.provider_event_created_at is null or v_payment.provider_event_created_at <= v_occurred_at)
-        and v_payment.status in ('pending', 'processing') then
-        update public.commerce_payments
-        set provider_event_id = v_event_id,
-            provider_event_created_at = v_occurred_at,
-            verified = true,
-            status = 'failed',
-            updated_at = now()
-        where id = v_payment.id;
-
-        if v_order_status = 'pending_payment' then
-          update public.commerce_orders
-          set status = 'cancelled', cancelled_at = v_occurred_at, updated_at = now()
-          where id = v_payment.order_id;
-        end if;
-      end if;
+    if found
+      and (v_payment.provider_event_created_at is null or v_payment.provider_event_created_at <= v_occurred_at)
+      and v_payment.status in ('pending', 'processing') then
+      -- A failed payment attempt does not cancel a Checkout Session: Stripe may
+      -- allow the customer to retry with another payment method on that session.
+      update public.commerce_payments
+      set provider_event_id = v_event_id,
+          provider_event_created_at = v_occurred_at,
+          provider_payment_intent_id = v_object ->> 'id',
+          verified = true,
+          status = 'failed',
+          updated_at = now()
+      where id = v_payment.id;
     end if;
 
   elsif v_event_type = 'charge.refunded' then
