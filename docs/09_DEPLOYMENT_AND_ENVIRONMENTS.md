@@ -1,5 +1,50 @@
 # Quincestone — Deployment and Environments
 
+> **Current provider snapshot (2026-11-22):** This section supersedes the historical Vercel inventory below. It records provider configuration and artifact metadata only; custom-domain verification is not a full browser journey test.
+
+## Current Vercel inventory
+
+The inspected Vercel team contains six projects. Each project has a latest READY preview deployment built from branch `brand/qid-1-7-corporate-convergence`, commit `044ffba186cc4b347d1a1941cacd6d1834be2316` (2026-11-11). The latest READY production deployments across all six projects point to `main` at `6e1f9615f747788c318e7d5d098e374e4d9dbce5` (2026-10-20). No deployment record was found for the current repository `main` merge commit `d4453c9e675d5562f9a4753203776f601759da41` (PR #147). Therefore the latest source changes are not verified as deployed to production.
+
+| Vercel project | App | Framework | Verified custom domains | Latest READY production SHA | Latest READY preview SHA |
+|---|---|---|---|---|---|
+| `webquincestone` | `apps/web` | Vite | `quincestone.com` (308 redirect to `www.quincestone.com`), `www.quincestone.com` | `6e1f9615f747788c318e7d5d098e374e4d9dbce5` | `044ffba186cc4b347d1a1941cacd6d1834be2316` |
+| `quincestone-shop` | `apps/shop` | Next.js | `shop.quincestone.com` | `6e1f9615f747788c318e7d5d098e374e4d9dbce5` | `044ffba186cc4b347d1a1941cacd6d1834be2316` |
+| `quincestone-account` | `apps/account` | Next.js | `account.quincestone.com` | `6e1f9615f747788c318e7d5d098e374e4d9dbce5` | `044ffba186cc4b347d1a1941cacd6d1834be2316` |
+| `quincestone-app` | `apps/app` | Next.js | `app.quincestone.com` | `6e1f9615f747788c318e7d5d098e374e4d9dbce5` | `044ffba186cc4b347d1a1941cacd6d1834be2316` |
+| `quincestone-admin` | `apps/admin` | Next.js | `admin.quincestone.com` | `6e1f9615f747788c318e7d5d098e374e4d9dbce5` | `044ffba186cc4b347d1a1941cacd6d1834be2316` |
+| `quincestone-deals` | `apps/deals` | Next.js | `quincestonedeals.app`, `www.quincestonedeal.app` | `6e1f9615f747788c318e7d5d098e374e4d9dbce5` | `044ffba186cc4b347d1a1941cacd6d1834be2316` |
+
+Vercel reported all listed custom domains as verified. This is provider domain-verification evidence, not proof that every page, redirect, authentication flow, checkout or API works end-to-end.
+
+### Source connection and release gap
+
+- Vercel deployment metadata still labels the GitHub owner as `quinceweb`. GitHub redirects that former repository path to `quinceforge/quincestone`; the redirect resolves to the same repository ID, so this is a legacy owner path, not evidence of two separate repositories.
+- Current `main` is `d4453c9e675d5562f9a4753203776f601759da41`. GitHub reports the merged PR #147 quality check successful, and PR #147's quality, rendered-browser and review checks all passed.
+- Vercel's latest READY previews are from the separate `brand/qid-1-7-corporate-convergence` branch and are not previews of current `main`.
+- The latest READY production artifacts are from `6e1f9615f747788c318e7d5d098e374e4d9dbce5`, before the later corporate-authority and homepage-test merges. Do not describe the current `main` content as live.
+- The Deal project has two distinct verified domain spellings: `quincestonedeals.app` and `www.quincestonedeal.app`. Canonical architecture documentation names `QuincestoneDeal.app`. Keep external Deal navigation withheld until the owner confirms the intended canonical hostname and redirect policy.
+- Corporate and Shop have separate Vercel projects and the expected custom domains are attached to their respective projects. Do not change domain attachments or DNS as part of this documentation reconciliation.
+
+## Deployment conclusions
+
+- **Source:** current repository `main` is ahead of every observed READY production artifact.
+- **Preview:** READY artifacts exist, but the latest ones are from the corporate-convergence feature branch, not current `main`.
+- **Production:** all six projects have READY production artifacts at the older SHA shown above; the current merged source has not been shown as deployed.
+- **Domain configuration:** all six product surfaces have their expected domains attached and Vercel marks them verified, with the Deal hostname discrepancy still unresolved.
+- **Runtime verification:** not performed in this provider inventory. Exact production-domain browser journeys, auth boundaries, checkout/payment, APIs, and cross-app handoffs remain separate verification work.
+
+## Release gate
+
+Before any production release:
+1. Build a preview from the exact current `main` SHA for each affected app.
+2. Verify route, responsive, accessibility, metadata, authentication and cross-app handoff behavior on those exact previews.
+3. Verify backend/RLS/provider behavior for any affected vertical slice; never use synthetic live financial actions.
+4. Resolve the canonical Deal hostname and redirect policy with the domain owner.
+5. Obtain separate explicit release approval; no production deployment, promotion, DNS/domain mutation, migration, payment configuration change or customer-data mutation is authorized by this audit.
+
+---
+
 ## Edge installation release
 
 Deploy the database migration before the gateway and updated authenticated function. Deploy `edge-channel-gateway` with platform JWT verification disabled because it performs its own installation/origin gate; keep `edge-workspace` JWT verification enabled. Configure the Business OS with the verified asset and gateway URLs, then test one marked installation from an approved and an unapproved origin. Disable or revoke the installation to stop new public intake. Do not reuse a production installation for preview.
