@@ -43,6 +43,8 @@ const pages: Record<string, PageContent> = {
   "industries/dental": { eyebrow: "DEMONSTRATION / DENTAL", title: "Route patient intent with care.", intro: "A conceptual example of separating routine, urgent, cosmetic, and administrative needs." },
   "industries/professional-services": { eyebrow: "DEMONSTRATION / PROFESSIONAL SERVICES", title: "Turn ambiguous enquiries into structured briefs.", intro: "A conceptual example of clarifying matter type, timing, jurisdiction, fit, and human review." },
   process: { eyebrow: "IMPLEMENTATION", title: "Diagnose. Design. Govern. Operate.", intro: "Each implementation begins with the real interaction journey, business knowledge, policy, systems, and human responsibilities." },
+  research: { eyebrow: "QUINCESTONE RESEARCH", title: "Explore the ideas behind better digital systems.", intro: "Quincestone research will share practical thinking on commerce, digital experience, business infrastructure, governed intelligence and the systems that help organizations progress. Only reviewed, attributable work will be published here." },
+  careers: { eyebrow: "CAREERS AT QUINCESTONE", title: "Build useful things with purpose.", intro: "This is Quincestone’s official careers information page. Current vacancies will be published here when approved roles are open. For now, use the corporate contact page for general career enquiries; submitting an enquiry is not an application for an advertised role." },
 };
 
 function setMeta(name: string, content: string) { const node = document.querySelector<HTMLMetaElement>(`meta[name="${name}"]`); if (node) node.content = content; }
@@ -50,9 +52,9 @@ function setProperty(property: string, content: string) { const node = document.
 
 function PublicRoot() {
   useEffect(() => {
-    const title = "Quincestone — Intent into outcomes.";
-    const description = "Quincestone turns intent into coordinated action and measurable outcomes.";
-    const url = "https://www.quincestone.com/";
+    const title = "Quincestone — Technology, commerce and business infrastructure.";
+    const description = "Quincestone builds digital experiences, commerce products and business infrastructure through Commerce, Edge, Business and Deal.";
+    const url = "https://quincestone.com/";
     document.title = title;
     const canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]'); if (canonical) canonical.href = url;
     setMeta("description", description); setProperty("og:title", title); setProperty("og:description", description); setProperty("og:url", url); setProperty("og:image", `${url}og/quincestone.png`); setProperty("og:image:alt", title); setMeta("twitter:title", title); setMeta("twitter:description", description); setMeta("twitter:image", `${url}og/quincestone.png`);
