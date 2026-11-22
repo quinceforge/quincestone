@@ -144,6 +144,13 @@ begin
       where provider = 'stripe' and provider_payment_intent_id = v_object ->> 'payment_intent'
       for update;
 
+      -- Stripe does not guarantee delivery order across event types. If a refund
+      -- arrives before checkout success has persisted the PaymentIntent ID, fail
+      -- the transaction so the event claim rolls back and Stripe can retry it.
+      if not found then
+        raise exception using errcode = 'P0002', message = 'Payment record not found for refunded PaymentIntent';
+      end if;
+
       if found then
         v_amount := coalesce((v_object ->> 'amount')::bigint, 0);
         v_total_refunded := coalesce((v_object ->> 'amount_refunded')::bigint, 0);
