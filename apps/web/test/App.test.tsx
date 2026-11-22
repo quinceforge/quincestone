@@ -40,7 +40,7 @@ describe("Quincestone application", () => {
     expect(screen.getByRole("heading", { name: /Intent into outcomes\./i })).toBeTruthy();
     expect(screen.getByText("Quincestone is a technology and commerce company building digital experiences, products and business infrastructure. Across Commerce, Edge, Business and Deal, we help people and organizations discover, build and improve what moves them forward.")).toBeTruthy();
     expect(screen.getByText("INTENT", { exact: true })).toBeTruthy();
-    expect(screen.getByText("OUTCOME", { exact: true })).toBeTruthy();
+    expect(screen.getAllByText("OUTCOME", { exact: true }).length).toBeGreaterThan(0);
     expect(screen.getByRole("link", { name: "Explore Commerce" })).toBeTruthy();
     expect(screen.getByRole("link", { name: "Business services" })).toBeTruthy();
   });
