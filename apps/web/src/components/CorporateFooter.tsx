@@ -20,6 +20,7 @@ const groups: FooterGroup[] = [
     links: [
       { label: "Business", to: "/business" },
       { label: "Edge", to: "/edge" },
+      { label: "Commerce", to: "/commerce" },
       { label: "Shop", to: "https://shop.quincestone.com", external: true },
       { label: "Deal", to: "/deal" },
     ],
@@ -37,7 +38,8 @@ const groups: FooterGroup[] = [
     label: "Company",
     links: [
       { label: "About", to: "/about" },
-      { label: "Principles", to: "/about" },
+      { label: "Research", to: "/research" },
+      { label: "Careers", to: "/careers" },
       { label: "Security", to: "/security" },
       { label: "Contact", to: "/contact" },
     ],
