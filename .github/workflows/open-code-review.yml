@@ -11,9 +11,17 @@ permissions:
 jobs:
   review:
     runs-on: ubuntu-latest
-    continue-on-error: true
+    env:
+      OCR_LLM_URL: ${{ secrets.OCR_LLM_URL }}
+      OCR_LLM_AUTH_TOKEN: ${{ secrets.OCR_LLM_AUTH_TOKEN }}
+      OCR_LLM_MODEL: ${{ vars.OCR_LLM_MODEL }}
     steps:
+      - name: Explain advisory review is unavailable when no model is configured
+        if: ${{ env.OCR_LLM_URL == '' || env.OCR_LLM_AUTH_TOKEN == '' || env.OCR_LLM_MODEL == '' }}
+        run: echo "Advisory review skipped because its LLM endpoint is not configured. This does not replace required build, test, or security checks."
       - name: Advisory Open Code Review
+        if: ${{ env.OCR_LLM_URL != '' && env.OCR_LLM_AUTH_TOKEN != '' && env.OCR_LLM_MODEL != '' }}
+        continue-on-error: true
         uses: alibaba/open-code-review@6e5cd8cf2578768b6c6d1fafa1d14f66801d5f2b
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
