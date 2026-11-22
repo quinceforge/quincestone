@@ -38,9 +38,11 @@ describe("Quincestone application", () => {
   it("renders the canonical homepage positioning", () => {
     render(<MemoryRouter initialEntries={["/"]}><App /></MemoryRouter>);
     expect(screen.getByRole("heading", { name: /Intent into outcomes\./i })).toBeTruthy();
-    expect(screen.getByText("Quincestone turns intent into coordinated action and measurable outcomes. One system connects governed intelligence, business operations, commerce and negotiated transactions.")).toBeTruthy();
-    expect(screen.getByText("Intent. Decision.", { exact: false })).toBeTruthy();
-    expect(screen.getByText("Action. Outcome.", { exact: false })).toBeTruthy();
+    expect(screen.getByText("Quincestone is a technology and commerce company building digital experiences, products and business infrastructure. Across Commerce, Edge, Business and Deal, we help people and organizations discover, build and improve what moves them forward.")).toBeTruthy();
+    expect(screen.getByText("INTENT", { exact: true })).toBeTruthy();
+    expect(screen.getByText("OUTCOME", { exact: true })).toBeTruthy();
+    expect(screen.getByRole("link", { name: "Explore Commerce" })).toBeTruthy();
+    expect(screen.getByRole("link", { name: "Business services" })).toBeTruthy();
   });
 
   it("renders a functional not-found route", () => {
@@ -51,7 +53,7 @@ describe("Quincestone application", () => {
 
   it("hands individual identity to the canonical Account surface", () => {
     render(<MemoryRouter initialEntries={["/"]}><App /></MemoryRouter>);
-    expect(screen.getAllByRole("link", { name: "Sign in" }).some((link) => link.getAttribute("href") === "https://app.quincestone.com/sign-in")).toBe(true);
+    expect(screen.getAllByRole("link", { name: "Sign in" }).some((link) => link.getAttribute("href") === "https://account.quincestone.com/sign-in")).toBe(true);
   });
 
   it.each([
@@ -73,7 +75,7 @@ describe("Quincestone application", () => {
 
   it.each([
     ["/edge", "Intelligence with an authority boundary."],
-    ["/commerce", "Better products. Better value. Built around demand."],
+    ["/commerce", "A considered way to discover and shop."],
     ["/about", "Built for the distance between demand and outcome."],
   ])("renders the upgraded corporate detail at %s", (route, heading) => {
     render(<MemoryRouter initialEntries={[route]}><App /></MemoryRouter>);

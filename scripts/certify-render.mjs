@@ -78,8 +78,8 @@ try {
         assert.deepEqual(targets,[],"Small button targets: "+JSON.stringify(targets));
         const links=await page.locator("a[href]").evaluateAll(nodes=>nodes.map(n=>({text:n.textContent.trim(),href:n.getAttribute("href")})));
         for(const link of links) {
-          if(/^(Get started|Create account)$/.test(link.text)) assert.ok(link.href.startsWith("https://app.quincestone.com/sign-up"),"Invalid signup CTA "+JSON.stringify(link));
-          if(link.text==="Sign in") assert.ok(link.href.startsWith("https://app.quincestone.com/sign-in"),"Invalid sign-in CTA");
+          if(/^(Get started|Create account)$/.test(link.text)) assert.ok(link.href.startsWith("https://account.quincestone.com/sign-up"),"Invalid signup CTA "+JSON.stringify(link));
+          if(link.text==="Sign in") assert.ok(link.href.startsWith("https://account.quincestone.com/sign-in"),"Invalid sign-in CTA");
           if(/Start.*assessment/i.test(link.text)) assert.equal(link.href,"/assessment","Invalid assessment CTA");
           assert.ok(!/^javascript:/i.test(link.href),"Unsafe link");
         }
@@ -139,7 +139,7 @@ try {
       await capture(page,width+"-business-authority");
       await page.goto("http://127.0.0.1:4173/commerce");
       await page.getByRole("tab",{name:/Learning/}).click();
-      assert.equal(await page.locator(".commerce-state>strong").textContent(),"Learning");
+      assert.equal(await page.locator(".commerce-loop + .commerce-state>strong").textContent(),"Learning");
       return {edge:"human review",business:"human review",commerce:"Learning"};
     });
     await record(width+" assessment",async()=>{
@@ -180,7 +180,7 @@ try {
       assert.deepEqual(hidden,[],"Editorial content hidden without reduced motion");
       await page.locator("#commerce").scrollIntoViewIfNeeded();
       assert.ok(await page.locator("#commerce").getByText("Built around demand.",{exact:false}).isVisible());
-      assert.ok(await page.getByRole("link",{name:/Shop Quincestone/}).isVisible());
+      assert.ok(await page.getByRole("link",{name:/Explore Quincestone Commerce/}).isVisible());
       await capture(page,width+"-commerce-normal-motion");
       await page.emulateMedia({reducedMotion:"reduce"});
       assert.ok(await page.evaluate(()=>matchMedia("(prefers-reduced-motion: reduce)").matches));

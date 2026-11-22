@@ -84,10 +84,10 @@ export function Home() {
     <section className="qs-hero">
       <div className="qs-hero-inner">
         <Reveal className="qs-hero-copy">
-          <p className="eyebrow">ONE QUINCESTONE</p>
+          <p className="eyebrow">QUINCESTONE / TECHNOLOGY &amp; COMMERCE</p>
           <h1>Intent<br /><em>into outcomes.</em></h1>
-          <p className="qs-hero-lede">Quincestone turns intent into coordinated action and measurable outcomes. One system connects governed intelligence, business operations, commerce and negotiated transactions.</p>
-          <div className="actions"><a className="button" href="https://app.quincestone.com/sign-up">Create account</a><Link className="button secondary" to="/demo/experience">See it in action</Link></div>
+          <p className="qs-hero-lede">Quincestone is a technology and commerce company building digital experiences, products and business infrastructure. Across Commerce, Edge, Business and Deal, we help people and organizations discover, build and improve what moves them forward.</p>
+          <div className="actions"><Link className="button" to="/commerce">Explore Commerce</Link><Link className="button secondary" to="/business">Business services</Link></div>
         </Reveal>
         <LiveSystemModel />
       </div>
@@ -95,12 +95,12 @@ export function Home() {
     </section>
 
     <section className="qs-statement">
-      <Reveal><p className="eyebrow">THE IDEA</p><h2>The distance between<br /><span>interest and execution</span><br />is where value is lost.</h2></Reveal>
-      <Reveal className="qs-statement-side"><p>People discover, ask, compare, request, buy and return. Businesses need to know what that demand means, what they are allowed to do, and what should happen next.</p><Link className="text-link" to="/platform">See the operating model →</Link></Reveal>
+      <Reveal><p className="eyebrow">THE IDEA</p><h2>A better digital foundation<br /><span>creates room to progress</span><br />with purpose.</h2></Reveal>
+      <Reveal className="qs-statement-side"><p>Quincestone brings together commerce, digital experience and business infrastructure. Each product has a clear role, while the company remains one coherent system.</p><Link className="text-link" to="/platform">See the operating model →</Link></Reveal>
     </section>
 
     <section className="qs-model" id="system">
-      <Reveal className="qs-section-intro"><p className="eyebrow">ONE OPERATING MODEL</p><h2>Intent. Decision.<br />Action. Outcome.</h2><p>Platform, Edge, Business, Commerce, Deals and Account are coordinated expressions of one Quincestone system—not six unrelated products.</p></Reveal>
+      <Reveal className="qs-section-intro"><p className="eyebrow">ONE OPERATING MODEL</p><h2>One company.<br />Connected capabilities.</h2><p>Shop serves customers. Edge elevates digital experiences. Business helps organizations build and operate. Deal structures commercial engagement. Account provides individual identity.</p></Reveal>
       <div className="qs-model-grid">{model.map(([number, title, text]) => <Reveal className="qs-model-step" key={number}><div><span>{number}</span><strong>{title}</strong><p>{text}</p></div></Reveal>)}</div>
     </section>
 
@@ -108,7 +108,7 @@ export function Home() {
     <ShowMeExperience />
 
     <section className="qs-business">
-      <Reveal className="qs-business-copy"><p className="eyebrow">QUINCESTONE FOR BUSINESS</p><h2>Your website should do more than receive people.</h2><p>Account establishes identity. An authorized business relationship opens a workspace; business context and Edge structure demand; people review what matters, authorize action, and record the outcome.</p><Link className="button" to="/assessment">Start an assessment</Link></Reveal>
+      <Reveal className="qs-business-copy"><p className="eyebrow">QUINCESTONE FOR BUSINESS</p><h2>Your website should do more than receive people.</h2><p>From a first website to a more capable operating system, Quincestone helps organizations establish their digital foundation, improve customer journeys and connect work to measurable outcomes.</p><Link className="button" to="/business">Explore Business services</Link></Reveal>
       <Reveal className="qs-business-map"><div className="qs-map-header"><span>FROM INTERACTION</span><span>TO OUTCOME</span></div><div className="qs-map-flow">{edgeStages.map((stage, index) => <div key={stage} className="qs-map-stage"><span>{String(index + 1).padStart(2, "0")}</span><strong>{stage}</strong>{index < edgeStages.length - 1 && <i aria-hidden="true">→</i>}</div>)}</div><div className="qs-map-foot">Every consequential boundary remains explicit.</div></Reveal>
     </section>
 
@@ -120,7 +120,7 @@ export function Home() {
 
     <section className="qs-commerce" id="commerce">
       <Reveal className="qs-commerce-intro"><p className="eyebrow">QUINCESTONE COMMERCE</p><h2>Better products.<br />Better value.<br />Built around demand.</h2></Reveal>
-      <Reveal className="qs-commerce-copy"><p>Commerce follows the same discipline. Discover demand, validate the opportunity, source carefully, transact clearly, learn from customers, and earn the right to build more control.</p><a className="text-link" href="https://shop.quincestone.com">Shop Quincestone →</a></Reveal>
+      <Reveal className="qs-commerce-copy"><p>Commerce follows the same discipline. Discover demand, validate the opportunity, source carefully, transact clearly, learn from customers, and earn the right to build more control.</p><Link className="text-link" to="/commerce">Explore Quincestone Commerce →</Link></Reveal>
       <Reveal className="qs-commerce-rail"><div><span>01</span><strong>Discover</strong></div><div><span>02</span><strong>Validate</strong></div><div><span>03</span><strong>Source</strong></div><div><span>04</span><strong>Improve</strong></div><div><span>05</span><strong>Brand</strong></div></Reveal>
     </section>
 
@@ -130,7 +130,7 @@ export function Home() {
     </section>
 
     <section className="qs-final">
-      <Reveal><p className="eyebrow">START WITH QUINCESTONE</p><h2>Begin with one identity.</h2><p>Establish your Quincestone identity, then move into the product context that matches what you need to do.</p><div className="actions"><a className="button" href="https://app.quincestone.com/sign-up">Create account</a><a className="text-link" href="https://app.quincestone.com/sign-in">Sign in →</a></div></Reveal>
+      <Reveal><p className="eyebrow">START WITH QUINCESTONE</p><h2>Begin with one identity.</h2><p>Explore the company, discover the Shop, understand Edge or start a conversation about your business.</p><div className="actions"><Link className="button" to="/commerce">Explore the Shop</Link><Link className="button secondary" to="/contact">Contact Quincestone</Link></div></Reveal>
     </section>
   </div>;
 }

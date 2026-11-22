@@ -20,24 +20,26 @@ const groups: FooterGroup[] = [
     links: [
       { label: "Business", to: "/business" },
       { label: "Edge", to: "/edge" },
+      { label: "Commerce", to: "/commerce" },
       { label: "Shop", to: "https://shop.quincestone.com", external: true },
-      { label: "Deals", to: "https://quincestonedeals.app", external: true },
+      { label: "Deal", to: "/deal" },
     ],
   },
   {
     label: "Account",
     links: [
-      { label: "Sign in", to: "https://app.quincestone.com/sign-in", external: true },
-      { label: "Create account", to: "https://app.quincestone.com/sign-up", external: true },
-      { label: "Orders", to: "https://app.quincestone.com/account/orders", external: true },
-      { label: "Saved", to: "https://app.quincestone.com/account/saved", external: true },
+      { label: "Sign in", to: "https://account.quincestone.com/sign-in", external: true },
+      { label: "Create account", to: "https://account.quincestone.com/sign-up", external: true },
+      { label: "Orders", to: "https://account.quincestone.com/orders", external: true },
+      { label: "Saved", to: "https://account.quincestone.com/saved", external: true },
     ],
   },
   {
     label: "Company",
     links: [
       { label: "About", to: "/about" },
-      { label: "Principles", to: "/about" },
+      { label: "Research", to: "/research" },
+      { label: "Careers", to: "/careers" },
       { label: "Security", to: "/security" },
       { label: "Contact", to: "/contact" },
     ],

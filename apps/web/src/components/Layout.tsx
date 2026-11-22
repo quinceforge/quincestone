@@ -65,13 +65,13 @@ export function Layout(){
         <div className="nav-group" data-open={open==="platform"}><button ref={platformButtonRef} className="nav-trigger" aria-expanded={open==="platform"} onClick={()=>setOpen(open==="platform"?null:"platform")}>Platform</button>{open==="platform"&&<Menu items={platform} close={close}/>}</div>
         <NavLink to="/edge">Edge</NavLink>
         <NavLink to="/business">Business</NavLink>
-        <a href="https://shop.quincestone.com">Commerce</a>
-        <a href="https://quincestonedeals.app">Deals</a>
+        <NavLink to="/commerce">Commerce</NavLink>
+        <NavLink to="/deal">Deal</NavLink>
       </nav>
       <div className="marketing-actions header-utilities">
         <div className="header-search"><button ref={searchButtonRef} className="header-icon" type="button" aria-label="Search" aria-expanded={open==="search"} aria-controls="corporate-search" onClick={()=>setOpen(open==="search"?null:"search")}><SearchIcon/></button>{open==="search"&&<div id="corporate-search" className="search-popover"><label htmlFor="site-search">Search Quincestone</label><input id="site-search" autoFocus value={searchQuery} onChange={(event)=>setSearchQuery(event.target.value)} placeholder="Platform, Edge, Business…" /> <div>{searchResults.map(item=><NavLink key={item.label} to={item.to} onClick={close}><strong>{item.label}</strong><small>{item.description}</small></NavLink>)}</div>{searchResults.length===0&&<p role="status">No destinations found. Try Platform, Edge, or Business.</p>}</div>}</div>
-        <a className="header-icon" href="https://app.quincestone.com/account" aria-label="Account"><AccountIcon/></a>
-        <a className="header-signup" href="https://app.quincestone.com/sign-up">Create account</a>
+        <a className="header-icon" href="https://account.quincestone.com" aria-label="Account"><AccountIcon/></a>
+        <a className="header-signup" href="https://account.quincestone.com/sign-up">Create account</a>
       </div>
       <button ref={mobileButtonRef} className="marketing-menu" aria-label={mobile?"Close menu":"Open menu"} aria-expanded={mobile} aria-controls="mobile-panel" onClick={()=>setMobile(v=>!v)}><span/></button>
       <div ref={mobilePanelRef} id="mobile-panel" className="mobile-panel" data-open={mobile} aria-hidden={!mobile}>
@@ -79,10 +79,10 @@ export function Layout(){
         <NavLink to="/platform" onClick={close}>Platform</NavLink>
         <NavLink to="/edge" onClick={close}>Edge</NavLink>
         <NavLink to="/business" onClick={close}>Business</NavLink>
-        <a href="https://shop.quincestone.com">Commerce</a>
-        <a href="https://quincestonedeals.app">Deals</a>
-        <a href="https://app.quincestone.com/account">Account</a>
-        <a href="https://app.quincestone.com/sign-up?next=%2Faccount">Create account</a>
+        <NavLink to="/commerce" onClick={close}>Commerce</NavLink>
+        <NavLink to="/deal" onClick={close}>Deal</NavLink>
+        <a href="https://account.quincestone.com">Account</a>
+        <a href="https://account.quincestone.com/sign-up">Create account</a>
       </div>
     </header>
     <main id="content" tabIndex={-1} onKeyDown={(event)=>{const tab=(event.target as HTMLElement).closest<ComponentRef<"button">>('button[role="tab"]');if(!tab||!["ArrowLeft","ArrowRight","ArrowUp","ArrowDown","Home","End"].includes(event.key))return;const tabs=Array.from(tab.parentElement?.querySelectorAll<ComponentRef<"button">>('button[role="tab"]')??[]);const index=tabs.indexOf(tab);const next=event.key==="Home"?0:event.key==="End"?tabs.length-1:(index+(["ArrowLeft","ArrowUp"].includes(event.key)?-1:1)+tabs.length)%tabs.length;event.preventDefault();tabs[next]?.focus();tabs[next]?.click();}}><Outlet/></main>
