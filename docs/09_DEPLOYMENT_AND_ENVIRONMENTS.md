@@ -25,6 +25,7 @@ Vercel reported all listed custom domains as verified. This is provider domain-v
 - The latest READY production artifacts are from `6e1f9615f747788c318e7d5d098e374e4d9dbce5`, before the later corporate-authority and homepage-test merges. Do not describe the current `main` content as live.
 - The Deal project has two distinct verified domain spellings: `quincestonedeals.app` and `www.quincestonedeal.app`. Canonical architecture documentation names `QuincestoneDeal.app`. Keep external Deal navigation withheld until the owner confirms the intended canonical hostname and redirect policy.
 - Corporate and Shop have separate Vercel projects and the expected custom domains are attached to their respective projects. Do not change domain attachments or DNS as part of this documentation reconciliation.
+- GitHub reports the `main` branch as unprotected, with required status-check enforcement disabled. This is a repository-governance risk; branch protection and required checks are not changed by this PR and require separate approval.
 
 ## Deployment conclusions
 
