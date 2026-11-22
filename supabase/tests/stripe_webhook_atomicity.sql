@@ -15,10 +15,10 @@ declare
   v_now bigint := extract(epoch from now())::bigint;
 begin
   insert into public.commerce_orders (
-    id, order_number, email, billing_address, shipping_address,
+    id, email, billing_address, shipping_address,
     subtotal_amount, total_amount, currency, status
   ) values (
-    v_order_id, 987654321, 'stripe-atomicity-test@example.invalid', '{}'::jsonb, '{}'::jsonb,
+    v_order_id, 'stripe-atomicity-test@example.invalid', '{}'::jsonb, '{}'::jsonb,
     5000, 5000, 'USD', 'pending_payment'
   );
 
@@ -138,10 +138,10 @@ begin
   if v_count <> 5000 then raise exception 'Expected refund deltas to total 5000, got %', v_count; end if;
 
   insert into public.commerce_orders (
-    id, order_number, email, billing_address, shipping_address,
+    id, email, billing_address, shipping_address,
     subtotal_amount, total_amount, currency, status
   ) values (
-    v_bad_order_id, 987654322, 'stripe-atomicity-rollback@example.invalid', '{}'::jsonb, '{}'::jsonb,
+    v_bad_order_id, 'stripe-atomicity-rollback@example.invalid', '{}'::jsonb, '{}'::jsonb,
     1000, 1000, 'USD', 'pending_payment'
   );
 
