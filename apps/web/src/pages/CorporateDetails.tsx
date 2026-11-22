@@ -21,14 +21,56 @@ export function EdgePage() {
 }
 
 const commerceLoop = ["Demand", "Research", "Source", "Product", "Purchase", "Outcome", "Learning"];
+const departments = [
+  ["DRIVE", "Useful technology and equipment for the road."],
+  ["HOME", "Considered products for everyday living."],
+  ["PET", "Thoughtful essentials for companion animals."],
+  ["TRAVEL", "Practical products for journeys and exploration."],
+  ["WORK", "Tools and essentials for getting work done."],
+] as const;
+
 export function CommercePage() {
   const [active, setActive] = useState(0);
-  useEffect(() => applySeo({ title: "Quincestone Commerce — Better products built around demand", description: "Demand-led product research, sourcing, commerce and learning from Quincestone.", path: "/commerce" }), []);
+  useEffect(() => applySeo({
+    title: "Quincestone Commerce — Discover the Quincestone Shop",
+    description: "Explore Quincestone's DRIVE, HOME, PET, TRAVEL and WORK departments and enter the dedicated Quincestone Shop.",
+    path: "/commerce",
+  }), []);
   return <div className="detail-page detail-page--commerce">
-    <section className="detail-hero"><p className="eyebrow">QUINCESTONE COMMERCE</p><h1>Better products. Better value. Built around demand.</h1><p>Quincestone Commerce begins with what people are trying to accomplish, then applies research, sourcing discipline, clear evidence and responsible transaction design.</p><div className="actions"><a className="button" href="https://shop.quincestone.com">Enter Shop</a><Link className="text-link" to="/discover">See how demand is discovered →</Link></div></section>
-    <section className="detail-instrument"><div className="detail-instrument__intro"><p className="eyebrow">THE DEMAND LOOP</p><h2>Commerce is a learning system, not a random catalogue.</h2><p>Select a stage to see how value moves through the product house.</p></div><div className="commerce-loop" role="tablist" aria-label="Commerce demand loop">{commerceLoop.map((stage,index)=><button type="button" role="tab" aria-selected={active===index} className={active===index?"is-active":""} onClick={()=>setActive(index)} key={stage}><span>{String(index+1).padStart(2,"0")}</span><strong>{stage}</strong></button>)}</div><div className="commerce-state"><span>ACTIVE STAGE</span><strong>{commerceLoop[active]}</strong><p>{["A customer need becomes visible through repeated intent and friction.","Claims, alternatives and unknowns are examined before selection.","Quality, reliability, economics and operating fit are evaluated.","A useful offer is shaped around evidence—not catalogue volume.","The transaction stays clear, controlled and connected to account continuity.","The real result is recorded beyond the moment of payment.","Evidence from outcomes improves what Quincestone selects and builds next."][active]}</p></div></section>
-    <section className="detail-rule"><p className="eyebrow">THE COMMERCE STANDARD</p><h2>We say what we verified. We show what remains unknown. We do not manufacture proof.</h2></section>
-    <section className="detail-cta"><h2>Explore the product house.</h2><a className="button" href="https://shop.quincestone.com">Visit Shop</a></section>
+    <section className="detail-hero">
+      <p className="eyebrow">QUINCESTONE COMMERCE</p>
+      <h1>A considered way to discover and shop.</h1>
+      <p>Quincestone Shop brings together useful products across five focused departments. The corporate Commerce experience explains our approach; the dedicated Shop is where customers explore the full catalogue, manage their basket and complete purchases.</p>
+      <div className="actions"><a className="button" href="https://shop.quincestone.com">Enter Quincestone Shop</a><Link className="text-link" to="/about">How Quincestone operates →</Link></div>
+    </section>
+    <section className="detail-instrument">
+      <div className="detail-instrument__intro"><p className="eyebrow">ONE SHOP / FIVE DEPARTMENTS</p><h2>Focused departments. One coherent shopping experience.</h2><p>Each department serves a different customer need while sharing the same standards for product information, service and checkout.</p></div>
+      <div className="belief-grid">{departments.map(([name, description], index) => <article key={name}><span>{String(index + 1).padStart(2, "0")}</span><h2>{name}</h2><p>{description}</p></article>)}</div>
+    </section>
+    <section className="detail-instrument">
+      <div className="detail-instrument__intro"><p className="eyebrow">QUINCESTONE VERIFIED</p><h2>Confidence should be earned, not asserted.</h2><p>Verified product status is reserved for catalogue entries that satisfy Quincestone's documented evidence and publication requirements.</p></div>
+      <div className="commerce-state"><span>PRODUCT PUBLICATION STANDARD</span><strong>Evidence before display</strong><p>The corporate showcase is limited to two eligible products. The current source catalogue has not yet supplied two records that pass the complete publication gate, so no product cards are being fabricated. Eligible products will appear here when verified by the authoritative Shop catalogue.</p></div>
+    </section>
+    <section className="detail-instrument">
+      <div className="detail-instrument__intro"><p className="eyebrow">THE COMMERCE STANDARD</p><h2>From customer need to a considered purchase.</h2><p>Select a stage to understand how Quincestone approaches commerce.</p></div>
+      <div className="commerce-loop" role="tablist" aria-label="Commerce process">{commerceLoop.map((stage,index)=><button type="button" role="tab" aria-selected={active===index} className={active===index?"is-active":""} onClick={()=>setActive(index)} key={stage}><span>{String(index+1).padStart(2,"0")}</span><strong>{stage}</strong></button>)}</div>
+      <div className="commerce-state"><span>ACTIVE STAGE</span><strong>{commerceLoop[active]}</strong><p>{["Customer needs and useful product opportunities guide discovery.","Product claims, alternatives and unknowns are examined.","Quality, reliability, economics and operating fit are considered.","Offers are presented with clear and accurate product information.","Customers complete transactions in the dedicated Quincestone Shop.","Service and order outcomes matter beyond the moment of payment.","Evidence from customer outcomes informs future improvements."][active]}</p></div>
+    </section>
+    <section className="detail-cta"><h2>Explore the full Quincestone product house.</h2><p>Browse all available products, departments and shopping services in the dedicated commerce platform.</p><a className="button" href="https://shop.quincestone.com">Enter Quincestone Shop</a></section>
+  </div>;
+}
+
+export function DealPage() {
+  useEffect(() => applySeo({
+    title: "Quincestone Deal — Commercial opportunities and negotiation",
+    description: "A structured way to explore Quincestone commercial proposals, project terms and business opportunities.",
+    path: "/deal",
+  }), []);
+  return <div className="detail-page detail-page--deal">
+    <section className="detail-hero"><p className="eyebrow">QUINCESTONE DEAL</p><h1>Commercial conversations, clearly structured.</h1><p>Quincestone Deal is the intended negotiation layer for qualified project proposals, commercial opportunities, partnership discussions and agreed terms. It is designed to make scope, responsibilities, decisions and records easier to follow.</p><div className="actions"><Link className="button" to="/contact">Discuss a commercial opportunity</Link><Link className="text-link" to="/business">Explore Business services →</Link></div></section>
+    <section className="belief-grid"><article><span>01</span><h2>Proposals</h2><p>Define the intended work, deliverables, assumptions and commercial scope.</p></article><article><span>02</span><h2>Negotiation</h2><p>Keep questions, revisions and agreed changes connected to the proposal.</p></article><article><span>03</span><h2>Agreements</h2><p>Record accepted terms and approval evidence before work begins.</p></article><article><span>04</span><h2>Continuity</h2><p>Connect an agreed engagement to its authorized Business workspace and delivery process.</p></article></section>
+    <section className="detail-rule"><p className="eyebrow">COMMERCIAL INTEGRITY</p><h2>Clear scope. Visible decisions. Authorized commitments.</h2><p>The public Deal page is an introduction, not a representation that a payment, escrow or contract-signing service is live. Access to the dedicated Deal application will be published after its canonical domain and production readiness are verified.</p></section>
+    <section className="detail-cta"><h2>Have a project or partnership in mind?</h2><Link className="button" to="/contact">Contact Quincestone</Link></section>
   </div>;
 }
 
