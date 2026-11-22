@@ -65,8 +65,8 @@ export function Layout(){
         <div className="nav-group" data-open={open==="platform"}><button ref={platformButtonRef} className="nav-trigger" aria-expanded={open==="platform"} onClick={()=>setOpen(open==="platform"?null:"platform")}>Platform</button>{open==="platform"&&<Menu items={platform} close={close}/>}</div>
         <NavLink to="/edge">Edge</NavLink>
         <NavLink to="/business">Business</NavLink>
-        <a href="https://shop.quincestone.com">Commerce</a>
-        <a href="/deal">Deal</a>
+        <NavLink to="/commerce">Commerce</NavLink>
+        <NavLink to="/deal">Deal</NavLink>
       </nav>
       <div className="marketing-actions header-utilities">
         <div className="header-search"><button ref={searchButtonRef} className="header-icon" type="button" aria-label="Search" aria-expanded={open==="search"} aria-controls="corporate-search" onClick={()=>setOpen(open==="search"?null:"search")}><SearchIcon/></button>{open==="search"&&<div id="corporate-search" className="search-popover"><label htmlFor="site-search">Search Quincestone</label><input id="site-search" autoFocus value={searchQuery} onChange={(event)=>setSearchQuery(event.target.value)} placeholder="Platform, Edge, Business…" /> <div>{searchResults.map(item=><NavLink key={item.label} to={item.to} onClick={close}><strong>{item.label}</strong><small>{item.description}</small></NavLink>)}</div>{searchResults.length===0&&<p role="status">No destinations found. Try Platform, Edge, or Business.</p>}</div>}</div>
@@ -79,8 +79,8 @@ export function Layout(){
         <NavLink to="/platform" onClick={close}>Platform</NavLink>
         <NavLink to="/edge" onClick={close}>Edge</NavLink>
         <NavLink to="/business" onClick={close}>Business</NavLink>
-        <a href="https://shop.quincestone.com">Commerce</a>
-        <a href="/deal">Deal</a>
+        <NavLink to="/commerce" onClick={close}>Commerce</NavLink>
+        <NavLink to="/deal" onClick={close}>Deal</NavLink>
         <a href="https://account.quincestone.com">Account</a>
         <a href="https://account.quincestone.com/sign-up">Create account</a>
       </div>
