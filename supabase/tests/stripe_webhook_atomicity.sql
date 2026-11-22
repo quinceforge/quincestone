@@ -181,7 +181,31 @@ begin
   if v_status <> 'pending' then
     raise exception 'Failed reconciliation changed payment status to %', v_status;
   end if;
+
+  -- A refund may be delivered before the Checkout success event has persisted
+  -- the PaymentIntent ID. It must remain retryable, not be silently acknowledged.
+  begin
+    perform public.process_stripe_webhook_event(jsonb_build_object(
+      'id', 'evt_atomicity_test_unmatched_refund',
+      'type', 'charge.refunded',
+      'created', v_now + 4,
+      'data', jsonb_build_object('object', jsonb_build_object(
+        'payment_intent', 'pi_atomicity_test_not_yet_linked',
+        'amount', 5000,
+        'amount_refunded', 1000
+      ))
+    ));
+    raise exception 'Expected unmatched refund to remain retryable';
+  exception when no_data_found then
+    null;
+  end;
+
+  select count(*) into v_count from public.commerce_stripe_events
+  where event_id = 'evt_atomicity_test_unmatched_refund';
+  if v_count <> 0 then
+    raise exception 'Unmatched refund left a committed event claim';
+  end if;
 end;
-$$;
+$;
 
 rollback;
