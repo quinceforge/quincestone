@@ -2,9 +2,13 @@
 
 These rules apply repository-wide. More specific application instructions may add constraints but may not contradict the [canonical ecosystem architecture](docs/00_COMPANY_ARCHITECTURE.md).
 
+## Read before editing
+
+Start with the [repository guide](docs/REPOSITORY_GUIDE.md) and [delivery direction](docs/DELIVERY_DIRECTION.md). Read the owning surface and authority documents for the requested change. Check current source, related PRs and runtime evidence before using historical plans. Record the workstream, prerequisites and verification in the PR.
+
 ## Product boundaries
 
-- Treat `quinceweb/quincestone` and remote `main` as source authority. Source existence is not deployment evidence.
+- Treat `quinceforge/quincestone` and remote `main` as source authority. Source existence is not deployment evidence.
 - Preserve `apps/web`, `apps/shop`, `apps/account`, `apps/app`, `apps/deals` and `apps/admin` as separate responsibility boundaries.
 - `apps/web` owns only institutional `quincestone.com`; `apps/shop` owns product discovery and fixed-price commerce at `shop.quincestone.com`.
 - Quincestone Account owns individual identity and relationship. It never grants business or platform authority by itself.

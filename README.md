@@ -1,5 +1,7 @@
 # Quincestone
 
+Start with the [repository guide](docs/REPOSITORY_GUIDE.md) for ownership, infrastructure and evidence. Use the [delivery direction](docs/DELIVERY_DIRECTION.md) to choose and verify the next change.
+
 ## Edge business installations
 
 Edge can be installed in an approved business-owned website as a workspace-bound intake channel. The public installation key identifies the installation; it is not a secret, login, role or authorization grant. Public traffic enters through `edge-channel-gateway`, while workspace members continue to use the authenticated `edge-workspace` function. Both use the same governed operating pipeline and the one canonical Quincestone Supabase backend.
@@ -14,7 +16,7 @@ Quincestone is a governed business and commerce ecosystem that understands deman
 | `shop.quincestone.com` | Quincestone Shop: product discovery and fixed-price commerce | `apps/shop` |
 | `account.quincestone.com` | Quincestone Account: individual identity and relationship | `apps/account` |
 | `app.quincestone.com` | Quincestone Business OS: authorized business workspaces | `apps/app` |
-| `QuincestoneDeal.app` | Quincestone Deals / QDE: negotiated commerce | `apps/deals` |
+| [Hostname pending confirmation](docs/09_DEPLOYMENT_AND_ENVIRONMENTS.md) | Quincestone Deals / QDE: negotiated commerce | `apps/deals` |
 | `admin.quincestone.com` | Quincestone Admin: internal control plane | `apps/admin` |
 
 Authentication does not imply workspace access or platform administration. Shop and Deals are peer product experiences; neither is a module of the Business OS.

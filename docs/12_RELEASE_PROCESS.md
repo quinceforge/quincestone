@@ -6,15 +6,7 @@
 
 ## Release states
 
-A change may be:
-
-1. Implemented — source code exists.
-2. Configured — provider/project configuration exists.
-3. Deployed — a provider reports the deployment/version.
-4. Verified — the deployed behavior has been directly checked.
-5. Live — production domain/runtime verification confirms the intended behavior.
-
-These states must never be conflated.
+Use the [canonical status definitions](00_COMPANY_ARCHITECTURE.md#status-language). Record source, provider configuration, deployment and runtime verification separately with dates and exact commit references.
 
 ## Required gate
 
@@ -25,13 +17,15 @@ For a production-facing change:
 - verify database/security changes when applicable;
 - obtain a successful Vercel deployment for the exact release commit when applicable;
 - verify the preview/runtime behavior;
-- merge the PR;
+- obtain explicit merge approval and merge through the approved release path;
 - verify the resulting `main` deployment;
 - verify the production domain separately.
 
 A previous successful deployment of an earlier commit does not verify a later commit.
 
 ## Engineering sequence
+
+Use the [delivery direction](DELIVERY_DIRECTION.md) to identify prerequisites and record the evidence required before review.
 
 `INSPECT REALITY → DEFINE AUTHORITY → MODEL STATE → IMPLEMENT VERTICALLY → VERIFY EVIDENCE → DOCUMENT TRUTH → RELEASE SAFELY → LEARN FROM OUTCOMES`
 
