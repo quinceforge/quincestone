@@ -23,13 +23,15 @@ All surfaces use the one canonical Supabase project named `quincestone`. They sh
 
 ## Repository
 
+Remote `main` in [`quinceforge/quincestone`](https://github.com/quinceforge/quincestone) is the canonical source. The [release process](docs/12_RELEASE_PROCESS.md) records the audited source baseline, accountable roles and decisions requiring separate approval.
+
 - `apps/web` — Vite + React institutional Corporate surface.
 - `apps/shop` — Next.js App Router standalone Shop application.
 - `apps/account` — Next.js individual Account.
 - `apps/app` — Next.js Business OS.
 - `apps/deals` — Next.js negotiated-commerce application.
 - `apps/admin` — Next.js internal control plane.
-- `packages/*` — shared UI, types, configuration and intelligence primitives with real consumers.
+- `packages/*` — four existing shared packages for UI, types, configuration and intelligence. Shared capabilities must use documented public exports, explicit workspace dependencies, real consumers and appropriate server/client boundaries.
 - `supabase/*` — database migrations and Edge Functions; deployed state must be reconciled separately.
 
 ## Documentation authority

@@ -1,10 +1,14 @@
 # Quincestone — Deployment and Environments
 
-> **Current provider snapshot (2026-11-22):** This section supersedes the historical Vercel inventory below. It records provider configuration and artifact metadata only; custom-domain verification is not a full browser journey test.
+## Source and evidence scope
 
-## Current Vercel inventory
+Remote `main` in [`quinceforge/quincestone`](https://github.com/quinceforge/quincestone) was verified on 2026-11-26 at audited SHA `4597086726f3afa0facc9042affaba8d4b3ca67a`. This is source evidence. The audited SHA has no deployment or production journey verification in this record. See the [release process](12_RELEASE_PROCESS.md#status-and-evidence) for evidence requirements and [open decisions](12_RELEASE_PROCESS.md#open-decisions) for approval gates.
 
-The inspected Vercel team contains six projects. Each project has a latest READY preview deployment built from branch `brand/qid-1-7-corporate-convergence`, commit `044ffba186cc4b347d1a1941cacd6d1834be2316` (2026-11-11). The latest READY production deployments across all six projects point to `main` at `6e1f9615f747788c318e7d5d098e374e4d9dbce5` (2026-10-20). No deployment record was found for the current repository `main` merge commit `d4453c9e675d5562f9a4753203776f601759da41` (PR #147). Therefore the latest source changes are not verified as deployed to production.
+> **Dated provider snapshot (2026-11-22):** This section supersedes the 2026-09-23 Vercel inventory below. It records provider configuration and artifacts. Custom-domain verification describes provider configuration and is separate from runtime journey testing.
+
+## Vercel inventory observed on 2026-11-22
+
+The inspected Vercel team contains six projects. Each project has a latest READY preview deployment built from branch `brand/qid-1-7-corporate-convergence`, commit `044ffba186cc4b347d1a1941cacd6d1834be2316` (2026-11-11). The latest READY production deployments across all six projects point to `main` at `6e1f9615f747788c318e7d5d098e374e4d9dbce5` (2026-10-20). No deployment record was found for the repository `main` merge commit at that inspection `d4453c9e675d5562f9a4753203776f601759da41` (PR #147). The inspection did not establish production deployment of that source SHA.
 
 | Vercel project | App | Framework | Verified custom domains | Latest READY production SHA | Latest READY preview SHA |
 |---|---|---|---|---|---|
@@ -19,19 +23,19 @@ Vercel reported all listed custom domains as verified. This is provider domain-v
 
 ### Source connection and release gap
 
-- Vercel deployment metadata still labels the GitHub owner as `quinceweb`. GitHub redirects that former repository path to `quinceforge/quincestone`; the redirect resolves to the same repository ID, so this is a legacy owner path, not evidence of two separate repositories.
-- Current `main` is `d4453c9e675d5562f9a4753203776f601759da41`. GitHub reports the merged PR #147 quality check successful, and PR #147's quality, rendered-browser and review checks all passed.
-- Vercel's latest READY previews are from the separate `brand/qid-1-7-corporate-convergence` branch and are not previews of current `main`.
-- The latest READY production artifacts are from `6e1f9615f747788c318e7d5d098e374e4d9dbce5`, before the later corporate-authority and homepage-test merges. Do not describe the current `main` content as live.
+- The 2026-11-22 inspection recorded the former GitHub owner `quinceweb` in Vercel deployment metadata. The former path redirected to `quinceforge/quincestone` and resolved to the same repository ID.
+- At that inspection, `main` was `d4453c9e675d5562f9a4753203776f601759da41`. GitHub reports the merged PR #147 quality check successful, and PR #147's quality, rendered-browser and review checks all passed.
+- Vercel's latest READY previews are from the separate `brand/qid-1-7-corporate-convergence` branch and are not previews of the `main` SHA recorded in that inspection.
+- The latest READY production artifacts are from `6e1f9615f747788c318e7d5d098e374e4d9dbce5`, before the later corporate-authority and homepage-test merges. Those artifacts establish deployment only for the observed production SHA.
 - The Deal project has two distinct verified domain spellings: `quincestonedeals.app` and `www.quincestonedeal.app`. Canonical architecture documentation names `QuincestoneDeal.app`. Keep external Deal navigation withheld until the owner confirms the intended canonical hostname and redirect policy.
 - Corporate and Shop have separate Vercel projects and the expected custom domains are attached to their respective projects. Do not change domain attachments or DNS as part of this documentation reconciliation.
-- GitHub reports the `main` branch as unprotected, with required status-check enforcement disabled. This is a repository-governance risk; branch protection and required checks are not changed by this PR and require separate approval.
+- The 2026-11-22 record reports `main` as unprotected with required status-check enforcement disabled. Current settings and any proposed changes require separate review and approval.
 
-## Deployment conclusions
+## Deployment conclusions from 2026-11-22
 
-- **Source:** current repository `main` is ahead of every observed READY production artifact.
+- **Source:** the inspected repository `main` is ahead of every observed READY production artifact.
 - **Preview:** READY artifacts exist, but the latest ones are from the corporate-convergence feature branch, not current `main`.
-- **Production:** all six projects have READY production artifacts at the older SHA shown above; the current merged source has not been shown as deployed.
+- **Production:** all six projects have READY production artifacts at the older SHA shown above; the source SHA inspected on 2026-11-22 had no matching deployment in that record.
 - **Domain configuration:** all six product surfaces have their expected domains attached and Vercel marks them verified, with the Deal hostname discrepancy still unresolved.
 - **Runtime verification:** not performed in this provider inventory. Exact production-domain browser journeys, auth boundaries, checkout/payment, APIs, and cross-app handoffs remain separate verification work.
 
@@ -50,13 +54,15 @@ Before any production release:
 
 Deploy the database migration before the gateway and updated authenticated function. Deploy `edge-channel-gateway` with platform JWT verification disabled because it performs its own installation/origin gate; keep `edge-workspace` JWT verification enabled. Configure the Business OS with the verified asset and gateway URLs, then test one marked installation from an approved and an unapproved origin. Disable or revoke the installation to stop new public intake. Do not reuse a production installation for preview.
 
-**Authority:** current deployment evidence
+## Historical Vercel snapshot from 2026-09-23
+
+**Evidence status:** **SUPERSEDED** by the 2026-11-22 inventory. The following records describe the original inspection.
 
 **Inspected:** 2026-09-23 against `main` source `8d10dc36eab4e207c2db1026ba9435ba43cb7ac2`
 
 ## Vercel projects
 
-Five projects are **CONNECTED** to `quinceweb/quincestone` in the inspected Vercel team. No standalone Shop project exists yet. Provider state and repository configuration are reported separately; a repository contract is not deployment proof.
+The 2026-09-23 inspection recorded five projects **CONNECTED** to the former repository path `quinceweb/quincestone` in the inspected Vercel team. No standalone Shop project exists yet. Provider state and repository configuration are reported separately; a repository contract is not deployment proof.
 
 | Project | App boundary | Framework | Repository configuration | Domains reported by Vercel | Latest production attempt | Latest READY production |
 |---|---|---|---|---|---|---|
@@ -69,7 +75,7 @@ Five projects are **CONNECTED** to `quinceweb/quincestone` in the inspected Verc
 
 All projects reported Node `24.x`. Project IDs are intentionally omitted because names are sufficient for operations and avoid turning volatile provider identifiers into architecture.
 
-## Deployment conclusions
+## Deployment conclusions from 2026-09-23
 
 - Corporate Web is **DEPLOYED** at the inspected `main` SHA and Vercel reports production **READY**. Direct production journey verification is separate.
 - Standalone Shop is repository-ready only after its branch checks pass. It has no Vercel project, preview, or production deployment in this snapshot.
