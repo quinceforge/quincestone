@@ -6,7 +6,9 @@ An anonymous channel visitor is not a workspace member or operator. An installat
 
 **Status:** Canonical architecture contract  
 **Scope:** All Quincestone products, applications, server routes, Supabase policies, Edge Functions, integrations and operational tooling  
-**Repository:** `quinceweb/quincestone`
+**Repository:** [`quinceforge/quincestone`](https://github.com/quinceforge/quincestone)
+
+**Canonical source ref:** remote `main`
 
 This document defines how Quincestone answers three questions consistently across every product surface:
 
@@ -84,7 +86,7 @@ These relationships are separate authorization facts, not separate people.
 
 ### 2.3 Account is relationship, not elevated authority
 
-`account.quincestone.com` is the individual relationship surface.
+`account.quincestone.com` is the individual relationship surface in the canonical architecture. The operational entry point and the allocation of customer-facing responsibilities between Account and Business OS require separate identity-owner approval. See the [open decisions](12_RELEASE_PROCESS.md#open-decisions).
 
 Account may expose profile, orders, saved items, addresses, payments, notifications, support and other individual-facing records when those records exist and the authenticated person is entitled to them.
 

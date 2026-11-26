@@ -4,7 +4,7 @@ These rules apply repository-wide. More specific application instructions may ad
 
 ## Product boundaries
 
-- Treat `quinceweb/quincestone` and remote `main` as source authority. Source existence is not deployment evidence.
+- Treat remote `main` in [`quinceforge/quincestone`](https://github.com/quinceforge/quincestone) as canonical source authority. Record source, provider, deployment and runtime evidence as described in the [release process](docs/12_RELEASE_PROCESS.md).
 - Preserve `apps/web`, `apps/shop`, `apps/account`, `apps/app`, `apps/deals` and `apps/admin` as separate responsibility boundaries.
 - `apps/web` owns only institutional `quincestone.com`; `apps/shop` owns product discovery and fixed-price commerce at `shop.quincestone.com`.
 - Quincestone Account owns individual identity and relationship. It never grants business or platform authority by itself.
@@ -43,4 +43,4 @@ For significant work:
 7. Verify the exact preview SHA, required CI, merged `main` SHA and production domain separately.
 8. Record blockers and deferred work without upgrading their status.
 
-The root lockfile is the only dependency authority. Preserve repository conventions and working boundaries unless inspected evidence supports a focused improvement.
+The root lockfile is the only dependency authority. Shared capabilities must have documented public exports, explicit workspace dependencies for workspace consumers, and real consumers. Enforce server/client boundaries at the public entry points and keep privileged code and credentials server-side. Preserve repository conventions and working boundaries unless inspected evidence supports a focused improvement.
