@@ -35,6 +35,8 @@ describe("commerce checkout", () => {
     const params = vi.mocked(deps.createStripeSession).mock.calls[0][0];
     expect(params.get("line_items[0][price_data][unit_amount]")).toBe("2500");
     expect(params.get("metadata[order_id]")).toBe("order-1");
+    expect(params.get("payment_intent_data[metadata][order_id]")).toBe("order-1");
+    expect(params.get("payment_intent_data[metadata][checkout_attempt_id]")).toBe(attemptId);
     expect(params.get("success_url")).toBe("https://shop.example/order/42?session_id={CHECKOUT_SESSION_ID}");
     expect(params.get("cancel_url")).toBe("https://shop.example/bag?checkout=cancelled");
   });
