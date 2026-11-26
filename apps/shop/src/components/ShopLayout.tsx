@@ -5,7 +5,7 @@ import Image from "next/image";
 import { ShopLink as Link, ShopNavLink as NavLink } from "../lib/navigation";
 
 const account = "https://app.quincestone.com";
-const worlds = [["Drive", "/drive"], ["Home", "/home-outdoor"], ["Pet", "/companion"], ["Travel", "/travel"], ["Work", "/products"]] as const;
+const worlds = [["Drive", "/drive"], ["Home", "/home-outdoor"], ["Pet", "/companion"], ["Travel", "/travel"], ["Work", "/work"]] as const;
 
 function Lockup() {
   return <span className="qs-lockup"><Image src="/quincestone-mark.svg" alt="" width={25} height={25} /><strong>QUINCESTONE</strong><i>SHOP</i></span>;

@@ -16,6 +16,7 @@ const collectionRoutes: Record<string, string | undefined> = {
   drive: "drive",
   companion: "companion",
   "home-outdoor": "home-outdoor",
+  work: "work",
 };
 
 function TruthPage({ eyebrow, title, text }: { eyebrow: string; title: string; text: string }) {
@@ -29,7 +30,7 @@ function OrderReturn() {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const path = (await params).slug ?? [];
   if (path[0] === "product" && path[1]) return { title: "Product", alternates: { canonical: `/product/${path[1]}` } };
-  const titles: Record<string, string> = { search: "Search", bag: "Bag", products: "Products", travel: "Travel", drive: "Drive", companion: "Pet", "home-outdoor": "Home" };
+  const titles: Record<string, string> = { search: "Search", bag: "Bag", products: "Products", travel: "Travel", drive: "Drive", companion: "Pet", "home-outdoor": "Home", work: "Work" };
   return path[0] ? { title: titles[path[0]] ?? "Shop", alternates: { canonical: `/${path.join("/")}` } } : {};
 }
 
